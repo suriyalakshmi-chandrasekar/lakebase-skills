@@ -1,0 +1,22 @@
+{
+  "name": "lakebase-skills",
+  "owner": {
+    "name": "Suriyalakshmi Chandrasekar",
+    "url": "https://github.com/suriyalakshmi-chandrasekar"
+  },
+  "metadata": {
+    "description": "Agent Skills for Databricks Lakebase (managed Postgres), built from official documentation",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "lakebase",
+      "description": "Databricks Lakebase Postgres skills: provisioning, connectivity, auth, security, synced tables, Lakebase CDF, logical replication, Lakebase Search, and operations",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/lakebase-core"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+# Declarative Automation Bundles (formerly Databricks Asset Bundles): Lakebase resources.
+# Every postgres_* resource is labelled Beta on the bundles reference. CLI versions that added them:
+#   0.287.0: postgres_projects, postgres_branches, postgres_endpoints
+#   1.0.0:   postgres_catalogs, postgres_synced_tables
+# This file is put together from the documented field names. It is NOT a copy of a doc example.
+# Check it against https://docs.databricks.com/aws/en/dev-tools/bundles/resources before use.
+# Last verified: 2026-11-20. Replace every <PLACEHOLDER>.
+
+bundle:
+  name: <BUNDLE_NAME>
+
+resources:
+  postgres_projects:
+    lakebase_project:
+      project_id: <PROJECT_ID>
+      display_name: "<DISPLAY_NAME>"
+      pg_version: <PG_VERSION>
+
+  postgres_branches:
+    main:
+      parent: ${resources.postgres_projects.lakebase_project.id}
+      branch_id: <BRANCH_ID>
+      no_expiry: true
+
+  postgres_endpoints:
+    primary:
+      parent: ${resources.postgres_branches.main.id}
+      endpoint_id: <ENDPOINT_ID>
+      endpoint_type: ENDPOINT_TYPE_READ_WRITE
+      autoscaling_limit_min_cu: <MIN_CU>
+      autoscaling_limit_max_cu: <MAX_CU>
+
+  postgres_catalogs:
+    lakebase_catalog:
+      catalog_id: <UC_CATALOG_NAME>
+      postgres_database: <DATABASE>
+      create_database_if_missing: true
+      branch: ${resources.postgres_branches.main.id}
+
+  postgres_synced_tables:
+    orders_synced:
+      synced_table_id: <UC_CATALOG_NAME>.<SCHEMA>.<TABLE>
+      source_table_full_name: <SRC_CATALOG>.<SRC_SCHEMA>.<SRC_TABLE>
+      primary_key_columns: [<PK_COLUMN>]
+      scheduling_policy: SNAPSHOT
+      postgres_database: <DATABASE>
+      branch: ${resources.postgres_branches.main.id}
+      create_database_objects_if_missing: true

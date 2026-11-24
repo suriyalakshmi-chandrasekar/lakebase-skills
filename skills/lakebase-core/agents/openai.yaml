@@ -1,0 +1,6 @@
+# Optional Codex UI metadata. Fields as documented at https://learn.chatgpt.com/docs/build-skills
+# (redirected from https://developers.openai.com/codex/skills), checked 2026-11-20.
+interface:
+  display_name: "Lakebase core"
+  short_description: "Databricks Lakebase Postgres: provisioning, connectivity, security, sync, search, operations"
+  default_prompt: "Use $lakebase-core to answer this Databricks Lakebase question with cited, last-verified docs."
